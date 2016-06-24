@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MINI_STL", "MINI_STL\MINI_STL.vcxproj", "{EFB6F953-0CDC-453C-AC6E-BE2BDC4F052B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFB6F953-0CDC-453C-AC6E-BE2BDC4F052B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EFB6F953-0CDC-453C-AC6E-BE2BDC4F052B}.Debug|Win32.Build.0 = Debug|Win32
+		{EFB6F953-0CDC-453C-AC6E-BE2BDC4F052B}.Release|Win32.ActiveCfg = Release|Win32
+		{EFB6F953-0CDC-453C-AC6E-BE2BDC4F052B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
