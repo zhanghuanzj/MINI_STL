@@ -62,21 +62,21 @@ namespace MINI_STL{
 			}
 		}
 		void testCase5(){
-			//tsVec<int> myvector(5);  // 5 default-constructed ints
-			//int i = 0;
-			//tsVec<int>::reverse_iterator rit = myvector.rbegin();
-			//for (; rit != myvector.rend(); ++rit)
-			//	*rit = ++i;
+			tsVec<int> myvector(5);  // 5 default-constructed ints
+			int i = 0;
+			tsVec<int>::reverse_iterator rit = myvector.rbegin();
+			for (; rit != myvector.rend(); ++rit)
+				*rit = ++i;
 
-			//i = 5;
-			//for (tsVec<int>::iterator it = myvector.begin(); it != myvector.end(); ++it, --i){
-			//	assert(*it == i);
-			//}
+			i = 5;
+			for (tsVec<int>::iterator it = myvector.begin(); it != myvector.end(); ++it, --i){
+				assert(*it == i);
+			}
 
-			//i = 1;
-			//for (tsVec<int>::reverse_iterator it = myvector.rbegin(); it != myvector.rend(); ++it, ++i){
-			//	assert(*it == i);
-			//}
+			i = 1;
+			for (tsVec<int>::reverse_iterator it = myvector.rbegin(); it != myvector.rend(); ++it, ++i){
+				assert(*it == i);
+			}
 		}
 		void testCase6(){
 			tsVec<int> v(11, 0);

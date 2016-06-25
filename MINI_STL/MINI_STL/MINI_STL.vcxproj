@@ -82,6 +82,7 @@
     <ClInclude Include="..\..\src\Construct.h" />
     <ClInclude Include="..\..\src\Iterator.h" />
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />
+    <ClInclude Include="..\..\src\ReverseIterator.h" />
     <ClInclude Include="..\..\src\Test\TestUtil.h" />
     <ClInclude Include="..\..\src\Test\VectorTest.h" />
     <ClInclude Include="..\..\src\TypeTraits.h" />

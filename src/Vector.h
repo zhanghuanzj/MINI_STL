@@ -5,6 +5,7 @@
 #include "Allocator.h"
 #include "Construct.h"
 #include "Uninitialized.h"
+#include "ReverseIterator.h"
 
 namespace MINI_STL
 {
@@ -12,15 +13,17 @@ namespace MINI_STL
 	class vector
 	{
 	public:
-		typedef T			value_type;
-		typedef T*			pointer;
-		typedef T*			iterator;
-		typedef const T*	const_iterator;
-		typedef T&			reference;
-		typedef const T&	const_reference;
-		typedef size_t		size_type;
-		typedef ptrdiff_t	difference_type;
-		typedef Alloc		dataAllocator;
+		typedef T								value_type;
+		typedef T*								pointer;
+		typedef T*								iterator;
+		typedef reverse_iterator_t<T*>			reverse_iterator;
+		typedef reverse_iterator_t<const T*>	const_reverse_iterator;
+		typedef const T*						const_iterator;
+		typedef T&								reference;
+		typedef const T&						const_reference;
+		typedef size_t							size_type;
+		typedef ptrdiff_t						difference_type;
+		typedef Alloc							dataAllocator;
 	protected:
 		iterator start;
 		iterator finish;
@@ -96,6 +99,14 @@ namespace MINI_STL
 				end_of_storage = temp+n;
 			}
 		}
+		void shrink_to_fit()
+		{
+			iterator new_start = dataAllocator::allocate(size());
+			finish = Uninitialized_copy(start,finish,new_start);
+			deallocate();
+			start = new_start;
+			end_of_storage = finish;
+		}
 		//∏≥÷µ
 		vector<T,Alloc>& operator=(const vector<T,Alloc>& v);
 		vector<T,Alloc>& operator=(const vector<T,Alloc>&& v);
@@ -114,6 +125,10 @@ namespace MINI_STL
 		const_iterator end()const{return finish;}
 		const_iterator cbegin()const{return start;};
 		const_iterator cend()const{return finish;}
+		reverse_iterator rbegin(){return reverse_iterator(finish);}
+		reverse_iterator rend(){return reverse_iterator(start);}
+		const_reverse_iterator crbegin()const{return const_reverse_iterator(finish);}
+		const_reverse_iterator crend()const{return const_reverse_iterator(start);}
 
 		//≤Â»Î…æ≥˝
 		void pop_back()

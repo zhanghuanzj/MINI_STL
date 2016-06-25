@@ -30,20 +30,20 @@ namespace MINI_STL
 		}
 		return cur;
 	}
-
+	//将[first,last)区间内的数据copy到dest开始的内存中,返回尾后迭代器
 	template<class InputIterator,class ForwardIterator>
 	ForwardIterator Uninitialized_copy(InputIterator first, InputIterator last,ForwardIterator dest)
 	{
 		typedef typename _type_traits<iterator_traits<InputIterator>::value_type>::is_POD_type isPODType;
 		return _Uninitialized_copy_aux(first,last,dest,isPODType());
 	}
-
+	//将[first,last)区间内的数据copy到dest开始的内存中,返回尾后迭代器
 	inline char* Uninitialized_copy(const char *first,const char *last,char *dest)
 	{
 		memmove(dest,first,last-first);
 		return dest+(last-first);
 	}
-
+	//将[first,last)区间内的数据copy到dest开始的内存中,返回尾后迭代器
 	inline wchar_t* Uninitialized_copy(const wchar_t *first,const wchar_t *last,wchar_t *dest)
 	{
 		memmove(dest,first,sizeof(wchar_t)*(last-first));
@@ -68,7 +68,7 @@ namespace MINI_STL
 			construct(first, value);
 		}
 	}
-
+	//将[first,last)区间内的数据用T填充
 	template<class ForwardIterator, class T>
 	void Uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& value)
 	{
@@ -96,7 +96,7 @@ namespace MINI_STL
 		}
 		return (first + i);
 	}
-
+	//从first开始的n个数据块用x来填充
 	template<class ForwardIterator, class Size, class T>
 	inline ForwardIterator Uninitialized_fill_n(ForwardIterator first,Size n, const T& x)
 	{
