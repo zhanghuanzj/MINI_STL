@@ -81,8 +81,10 @@
     <ClInclude Include="..\..\src\Allocator.h" />
     <ClInclude Include="..\..\src\Construct.h" />
     <ClInclude Include="..\..\src\Iterator.h" />
+    <ClInclude Include="..\..\src\List.h" />
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />
     <ClInclude Include="..\..\src\ReverseIterator.h" />
+    <ClInclude Include="..\..\src\Test\ListTest.h" />
     <ClInclude Include="..\..\src\Test\TestUtil.h" />
     <ClInclude Include="..\..\src\Test\VectorTest.h" />
     <ClInclude Include="..\..\src\TypeTraits.h" />
@@ -93,6 +95,7 @@
     <ClCompile Include="..\..\src\Alloc.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Profiler\Profiler.cpp" />
+    <ClCompile Include="..\..\src\Test\ListTest.cpp" />
     <ClCompile Include="..\..\src\Test\VectorTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
