@@ -80,6 +80,7 @@
     <ClInclude Include="..\..\src\Alloc.h" />
     <ClInclude Include="..\..\src\Allocator.h" />
     <ClInclude Include="..\..\src\Construct.h" />
+    <ClInclude Include="..\..\src\Functional.h" />
     <ClInclude Include="..\..\src\Iterator.h" />
     <ClInclude Include="..\..\src\List.h" />
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />

@@ -7,6 +7,7 @@
 #include "Uninitialized.h"
 #include "TypeTraits.h"
 #include "Algorithm.h"
+#include "Functional.h"
 
 namespace MINI_STL
 {
@@ -25,9 +26,12 @@ namespace MINI_STL
 		friend class list;
 	public:
 		typedef list_node<T>* list_node_pointer;
+		typedef const list_node<T>* const_list_node_pointer;
 		list_node_pointer node;
 	public:
 		list_iterator(list_node_pointer ptr = nullptr) :node(ptr){}
+		list_iterator(const_list_node_pointer ptr) :node(ptr){}
+		list_iterator(const list_iterator& it) :node(it.node){}
 
 		list_iterator& operator++();
 		list_iterator operator++(int);
@@ -49,12 +53,11 @@ namespace MINI_STL
 	public:
 		typedef T value_type;
 		typedef list_iterator<T> iterator;
-		typedef list_iterator<const T> const_iterator;
+		typedef list_iterator<T> const_iterator;
 		typedef reverse_iterator_t<iterator> reverse_iterator;
 		typedef reverse_iterator_t<const iterator> const_reverse_iterator;
 		typedef T& reference;
 		typedef size_t size_type;
-
 
 	protected:
 		//member
@@ -62,24 +65,24 @@ namespace MINI_STL
 		void empty_initialize();
 	public:
 
-		//constructor
+		//constructor & destructor
 		list();
 		list(int n, const T& val);
-
 		template <class InputIterator>
 		list(InputIterator first, InputIterator last);
 		list(const list& l);
 		list& operator = (const list& l);
 		~list();
 
+		//迭代器
 		iterator begin() {return node->next;}
-		iterator begin()const {return node->next;}
+		const_iterator begin()const {return node->next;}
 		reverse_iterator rbegin() {return reverse_iterator(node);}
 		const_reverse_iterator crbegin()const {return const_reverse_iterator(node);}
 		reverse_iterator rend() {return reverse_iterator(node->next);}
 		const_reverse_iterator crend()const {return const_reverse_iterator(node->next);}
 		iterator end() {return node;}
-		iterator end()const {return node;}
+		const_iterator end()const {return node;}
 		bool empty() const { return node->next==node;}
 		size_type size()const{ return MINI_STL::distance(begin(),end());}
 		reference front(){return *begin();}
@@ -94,13 +97,20 @@ namespace MINI_STL
 
 		//插入、删除
 		iterator insert(iterator position,const T &x);
+		void insert(iterator position,int n,const T& x);
+		template <class InputIterator>
+		void insert(iterator position,InputIterator first,InputIterator last);
+
 		void push_front(const T& x){insert(begin(),x);}
 		void push_back(const T& x){insert(end(),x);}
 		iterator erase(iterator position);
+		iterator erase(iterator first,iterator last);
 		void pop_front(){erase(begin());}
 		void pop_back(){erase(--end());}
 		void clear();
 		void remove(const T& value);
+		template<class Predicate>
+		void remove_if(Predicate pred);
 		void unique();
 
 		//转移、拼接、排序、合并、反转
@@ -111,8 +121,21 @@ namespace MINI_STL
 		void splice(iterator position,list&,iterator i);
 		void splice(iterator position,list&,iterator first,iterator last){if (first!=last) transfer(position,first,last);}
 		void merge(list &x);
+		template<class Compare>
+		void merge(list &x,Compare comp);
 		void reverse();
 		void sort();
+		template<class Compare>
+		void sort(Compare comp);
+
+		//判断==，!=
+		bool operator==(const list& x);
+		bool operator!=(const list& x);
+		bool operator<(const list& x);
+		bool operator>(const list& x);
+		bool operator<=(const list& x);
+		bool operator>=(const list& x);
+		
 	};
 
 	template<class T>
@@ -215,6 +238,25 @@ namespace MINI_STL
 	}
 
 	template<class T>
+	void list<T>::insert(iterator position,int n,const T& x)
+	{
+		while (n--)
+		{
+			insert(position,x);
+		}
+	}
+
+	template<class T>
+	template<class InputIterator>
+	void list<T>::insert(iterator position,InputIterator first,InputIterator last)
+	{
+		while (first!=last)
+		{
+			insert(position,*first);
+			++first;
+		}
+	}
+	template<class T>
 	typename list<T>::iterator list<T>::erase(iterator position)
 	{
 		listNode *next_node = position.node->next;
@@ -223,6 +265,16 @@ namespace MINI_STL
 		next_node->prev = prev_node;
 		destroy_node(position.node);
 		return next_node;
+	}
+
+	template<class T>
+	typename list<T>::iterator list<T>::erase(iterator first,iterator last)
+	{
+		while (first!=last)
+		{
+			erase(first++);
+		}
+		return last;
 	}
 
 	template<class T>
@@ -253,6 +305,23 @@ namespace MINI_STL
 			else
 			{
 				++first;
+			}
+		}
+	}
+
+	template<class T>
+	template<class Predicate>
+	void list<T>::remove_if(Predicate pred)
+	{
+		for (auto it=begin();it!=end();)
+		{
+			if (pred(*it))
+			{
+				it = erase(it);
+			}
+			else
+			{
+				++it;
 			}
 		}
 	}
@@ -335,6 +404,33 @@ namespace MINI_STL
 	}
 
 	template<class T>
+	template<class Compare>
+	void list<T>::merge(list &x,Compare comp)
+	{
+		iterator first1 = begin();
+		iterator last1 = end();
+		iterator first2 = x.begin();
+		iterator last2 = x.end();
+		while(first1!=last1&&first2!=last2)
+		{
+			if (comp(*first2,*first1))
+			{
+				iterator next = first2;
+				transfer(first1,first2,++next);
+				first2 = next;
+			}
+			else
+			{
+				++first1;
+			}
+		}
+		if (first2!=last2)
+		{
+			transfer(last1,first2,last2);
+		}
+	}
+
+	template<class T>
 	void list<T>::reverse()
 	{
 		if (node->next==node||node->next->next==node)
@@ -354,6 +450,13 @@ namespace MINI_STL
 	template<class T>
 	void list<T>::sort()
 	{
+		sort(less<T>());
+	}
+
+	template<class T>
+	template<class Compare>
+	void list<T>::sort(Compare comp)
+	{
 		if (node->next==node||node->next->next==node)
 		{
 			return;
@@ -367,7 +470,7 @@ namespace MINI_STL
 			int i=0;
 			while(i<fill&&!counter[i].empty())
 			{
-				counter[i].merge(carry);
+				counter[i].merge(carry,comp);
 				carry.swap(counter[i++]);
 			}
 			carry.swap(counter[i]);
@@ -378,13 +481,61 @@ namespace MINI_STL
 		}
 		for (int i = 1; i < fill; ++i)
 		{
-			counter[i].merge(counter[i-1]);
+			counter[i].merge(counter[i-1],comp);
 		}
 		swap(counter[fill-1]);
 	}
 
+	template<class T>
+	bool list<T>::operator==(const list& x)
+	{
+		const_iterator first1 = begin();
+		const_iterator first2 = x.begin();
+		const_iterator last1 = end();
+		const_iterator last2 = x.end();
+		while(first1!=last1&&first2!=last2&&*first1==*first2)
+		{
+			++first1;
+			++first2;
+		}
+		return first1==last1&&first2==last2;
+	}
 
-	//list_iterator
+	template<class T>
+	bool list<T>::operator!=(const list& x)
+	{
+		return !(*this==x);
+	}
+
+	template<class T>
+	bool list<T>::operator<(const list& x)
+	{
+		lexicographical_compare(begin(),end(),x.begin(),x.end());
+	}
+
+	template<class T>
+	bool list<T>::operator>(const list& x)
+	{
+		return x<(*this);
+	}
+
+	template<class T>
+	bool list<T>::operator<=(const list& x)
+	{
+		return !((*this)>x);
+	}
+
+	template<class T>
+	bool list<T>::operator>=(const list& x)
+	{
+		return !((*this)<x);
+	}
+	
+
+	/************************************************************************/
+	/*list_iterator
+	*/
+	/************************************************************************/
 	template<class T>
 	list_iterator<T>& list_iterator<T>::operator++()
 	{
@@ -414,6 +565,7 @@ namespace MINI_STL
 		--*this;
 		return temp;
 	}
+
 }
 
 #endif
