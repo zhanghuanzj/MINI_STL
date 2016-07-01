@@ -60,6 +60,9 @@
     <ClInclude Include="..\..\src\Functional.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Deque.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">

@@ -229,6 +229,77 @@ namespace MINI_STL
 		typedef _true_type    has_trivial_destructor;
 		typedef _true_type    is_POD_type;
 	};
+
+	template <class _Tp> struct _is_Integer {
+	  typedef _false_type _Integral;
+	};
+
+
+	template<>
+	struct _is_Integer<bool> {
+	  typedef _true_type _Integral;
+	};
+
+
+	template<>
+	struct _is_Integer<char> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<signed char> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<unsigned char> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<wchar_t> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<short> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<unsigned short> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<int> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<unsigned int> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<long> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<unsigned long> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<long long> {
+	  typedef _true_type _Integral;
+	};
+
+	template<>
+	struct _is_Integer<unsigned long long> {
+	  typedef _true_type _Integral;
+	};
 }
 
 #endif
