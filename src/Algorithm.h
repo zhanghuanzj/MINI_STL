@@ -74,7 +74,7 @@ namespace MINI_STL
 	{
 		OutputIterator operator()(InputIterator first,InputIterator last,OutputIterator dest)
 		{
-			return _copy(first,last-first,dest,iterator_category(first));
+			return _copy(first,last,dest,iterator_category(first));
 		}
 	};
 
@@ -110,7 +110,7 @@ namespace MINI_STL
 	template<class RandomAccessIterator,class OutputIterator>
 	inline OutputIterator _copy(RandomAccessIterator first,RandomAccessIterator last,OutputIterator dest,random_access_iterator_tag)
 	{
-		return _copy_d(first,last,dest,distance_type(first));
+		return _copy_d(first,last,dest,difference_type(first));
 	}
 
 	//RandomAccessIterator进行复制，通过比较Distance所以速度比较快

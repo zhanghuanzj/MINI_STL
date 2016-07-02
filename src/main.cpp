@@ -4,6 +4,7 @@
 #include "Profiler\Profiler.h"
 #include "Test\VectorTest.h"
 #include "Test\ListTest.h"
+#include "Test\DequeTest.h"
 
 using namespace MINI_STL::Profiler;
 
@@ -14,7 +15,7 @@ int main(){
 	//MINI_STL::BinarySearchTreeTest::testAllCases();
 	//MINI_STL::CircularBufferTest::testAllCases();
 	//MINI_STL::COWPtrTest::testAllCases();
-	//MINI_STL::DequeTest::testAllCases();
+	MINI_STL::DequeTest::testAllCases();
 	MINI_STL::ListTest::testAllCases();
 	//MINI_STL::GraphTest::testAllCases();
 	//MINI_STL::PairTest::testAllCases();
