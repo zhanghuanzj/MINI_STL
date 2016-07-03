@@ -1,5 +1,5 @@
-#ifndef _VECTOR_TEST_H_
-#define _VECTOR_TEST_H_
+#ifndef _MINI_STL_VECTOR_TEST_H_
+#define _MINI_STL_VECTOR_TEST_H_
 
 #include "../Vector.h"
 #include "TestUtil.h"

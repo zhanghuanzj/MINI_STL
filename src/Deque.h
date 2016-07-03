@@ -231,11 +231,15 @@ namespace MINI_STL
 		iterator erase(iterator position);
 		iterator erase(iterator first,iterator last);
 		iterator insert(iterator position,const value_type& x);
+		void swap(deque& x);
+		bool operator==(const deque& x);
+		bool operator!=(const deque& x);
 
 	public:
 		iterator start;
 		iterator finish;
 
+	private:
 		map_pointer map;
 		size_type map_size;
 
@@ -595,6 +599,41 @@ namespace MINI_STL
 		{
 			return insert_aux(position,x);
 		}
+	}
+
+	template<class T>
+	void deque<T>::swap(deque& x)
+	{
+		using MINI_STL::swap;
+		swap(start,x.start);
+		swap(finish,x.finish);
+		swap(map,x.map);
+		swap(map_size,x.map_size);
+	}
+
+	template<class T>
+	bool deque<T>::operator==(const deque& x)
+	{
+		if (size()!=x.size())
+		{
+			return false;
+		}
+		const_iterator first1 = begin();
+		const_iterator last1 = end();
+		const_iterator first2 = x.begin();
+		const_iterator last2 = x.end();
+		while (first1 != last1 && first2 != last2 && *first1 == *first2)
+		{
+			++first1;
+			++first2;
+		}
+		return first1==last1&&first2==last2;
+	}
+
+	template<class T>
+	bool deque<T>::operator!=(const deque& x)
+	{
+		return !(*this==x);
 	}
 }
 #endif

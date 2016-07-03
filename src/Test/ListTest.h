@@ -1,5 +1,5 @@
-#ifndef _LIST_TEST_H_
-#define _LIST_TEST_H_
+#ifndef _MINI_STL_LIST_TEST_H_
+#define _MINI_STL_LIST_TEST_H_
 
 #include "TestUtil.h"
 

@@ -72,22 +72,23 @@ namespace MINI_STL{
 			assert(MINI_STL::Test::container_equal(dq1, dq2));
 		}
 		void testCase5(){
-			//int arr[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-			//tsDQ<int> foo(arr, arr + 3), bar(arr + 3, arr + 10);
+			int arr[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			tsDQ<int> foo(arr, arr + 3), bar(arr + 3, arr + 10);
 
-			//assert(foo.size() == 3 && bar.size() == 7);
-			//foo.swap(bar);
-			//assert(foo.size() == 7 && bar.size() == 3);
-			//MINI_STL::swap(foo, bar);
-			//assert(foo.size() == 3 && bar.size() == 7);
+			assert(foo.size() == 3 && bar.size() == 7);
+			foo.swap(bar);
+			assert(foo.size() == 7 && bar.size() == 3);
+			MINI_STL::swap(foo, bar);
+			assert(foo.size() == 3 && bar.size() == 7);
 		}
-		void testCase6(){
-			//int arr[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-			//tsDQ<int> foo1(arr, arr + 3), bar(arr + 3, arr + 10);
 
-			//assert(foo1 != bar);
-			//auto foo2 = bar;
-			//assert(foo2 == bar);
+		void testCase6(){
+			int arr[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			tsDQ<int> foo1(arr, arr + 3), bar(arr + 3, arr + 10);
+
+			assert(foo1 != bar);
+			auto foo2 = bar;
+			assert(foo2 == bar);
 		}
 
 

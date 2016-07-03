@@ -1,5 +1,5 @@
-#ifndef _DEQUE_TEST_H_
-#define _DEQUE_TEST_H_
+#ifndef _MINI_STL_DEQUE_TEST_H_
+#define _MINI_STL_DEQUE_TEST_H_
 
 #include "TestUtil.h"
 
