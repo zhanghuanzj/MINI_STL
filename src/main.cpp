@@ -5,6 +5,7 @@
 #include "Test\VectorTest.h"
 #include "Test\ListTest.h"
 #include "Test\DequeTest.h"
+#include "Test\StackTest.h"
 
 using namespace MINI_STL::Profiler;
 
@@ -23,7 +24,7 @@ int main(){
 	//MINI_STL::QueueTest::testAllCases();
 	//MINI_STL::RefTest::testAllCases();
 	//MINI_STL::SharedPtrTest::testAllCases();
-	//MINI_STL::StackTest::testAllCases();
+	MINI_STL::StackTest::testAllCases();
 	//MINI_STL::StringTest::testAllCases();
 	//MINI_STL::SuffixArrayTest::testAllCases();
 	//MINI_STL::TrieTreeTest::testAllCases();

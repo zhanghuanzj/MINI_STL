@@ -190,8 +190,8 @@ namespace MINI_STL
 		void range_initialize(ForwardIterator first,ForwardIterator last,forward_iterator_tag);
 		//Constructor
 		deque():start(),finish(),map(0),map_size(0){ create_map_and_nodes(0); }
-		explicit deque(int n):start(),finish(),map(0),map_size(0){create_map_and_nodes(n); fill_initialize(T());}
-		deque(int n,const T& value):start(),finish(),map(0),map_size(0){create_map_and_nodes(n); fill_initialize(value);}
+		explicit deque(size_type n):start(),finish(),map(0),map_size(0){create_map_and_nodes(n); fill_initialize(T());}
+		deque(size_type n,const T& value):start(),finish(),map(0),map_size(0){create_map_and_nodes(n); fill_initialize(value);}
 		deque(const deque& x)
 		{	
 			create_map_and_nodes(x.size());  
@@ -199,6 +199,10 @@ namespace MINI_STL
 		}
 		template<class InputIterator>
 		deque(InputIterator first,InputIterator last);
+		~deque(){
+			clear(); 
+			dataAllocator::deallocate(start.M_first,buffer_size()); 
+			mapAllocator::deallocate(map,map_size);}
 
 		iterator begin(){return start;}
 		iterator end(){return finish;}
@@ -231,9 +235,9 @@ namespace MINI_STL
 		iterator erase(iterator position);
 		iterator erase(iterator first,iterator last);
 		iterator insert(iterator position,const value_type& x);
+
 		void swap(deque& x);
-		bool operator==(const deque& x);
-		bool operator!=(const deque& x);
+		deque& operator=(const deque& x);
 
 	public:
 		iterator start;
@@ -340,11 +344,11 @@ namespace MINI_STL
 			new_start = map + (map_size - new_num_nodes)/2+(add_at_front?nodes_to_add:0);
 			if (new_start < start.M_node)  //往左移
 			{
-				copy(start.M_node,finish.M_node+1,new_start);
+				MINI_STL::copy(start.M_node,finish.M_node+1,new_start);
 			}
 			else  //往右移
 			{
-				copy_backward(start.M_node,finish.M_node+1,new_start+old_num_nodes);
+				MINI_STL::copy_backward(start.M_node,finish.M_node+1,new_start+old_num_nodes);
 			}
 		}
 		else  //重新分配map
@@ -352,7 +356,7 @@ namespace MINI_STL
 			size_type new_map_size = map_size + max(map_size,nodes_to_add) + 2;
 			map_pointer new_map = mapAllocator::allocate(new_map_size);
 			new_start = new_map + (new_map_size - new_num_nodes)/2 + (add_at_front?nodes_to_add:0);
-			copy(start.M_node,finish.M_node+1,new_start);
+			MINI_STL::copy(start.M_node,finish.M_node+1,new_start);
 			mapAllocator::deallocate(map,map_size);
 			map = new_map;
 			map_size = new_map_size;
@@ -476,7 +480,7 @@ namespace MINI_STL
 	template<class T>
 	void deque<T>::clear()
 	{
-		for(map_pointer node = start>M_node+1;node<finish.M_node;++node)
+		for(map_pointer node = start.M_node+1;node<finish.M_node;++node)
 		{
 			destroy(*node,*node+buffer_size());
 			dataAllocator::deallocate(*node,buffer_size());
@@ -489,7 +493,7 @@ namespace MINI_STL
 		}
 		else
 		{
-			destroy(start.M_cur,start.M_last);
+			destroy(start.M_cur,finish.M_cur);
 		}
 
 		finish = start;
@@ -525,7 +529,7 @@ namespace MINI_STL
 		{
 			difference_type n = last - first;
 			difference_type elems_before = first - start;
-			if (elems_before<((size()-n)>>1))
+			if (elems_before<difference_type(((size()-n)>>1)) )
 			{
 				copy_backward(start,first,last);
 				iterator new_start = start + n;
@@ -612,28 +616,79 @@ namespace MINI_STL
 	}
 
 	template<class T>
-	bool deque<T>::operator==(const deque& x)
+	deque<T>& deque<T>::operator=(const deque& x)
 	{
-		if (size()!=x.size())
+		const size_type len = size();
+		if (this != &x)
+		{
+			if (len > x.size())
+			{
+				erase(copy(x.begin(),x.end(),start),finish);
+			}
+			else
+			{
+				copy(x.begin(),x.begin()+difference_type(len),start);
+				const_iterator first = x.begin()+difference_type(len);
+				const_iterator last = x.end();
+				while (first!=last)
+				{
+					push_back(*(first++));
+				}
+			}
+		}
+		return *this;
+	}
+
+
+	template<class T>
+	inline bool operator==(const deque<T>& x,const deque<T>& y)
+	{
+		if (y.size()!=x.size())
 		{
 			return false;
 		}
-		const_iterator first1 = begin();
-		const_iterator last1 = end();
-		const_iterator first2 = x.begin();
-		const_iterator last2 = x.end();
+		auto first1 = x.begin();
+		auto last1 = x.end();
+		auto first2 = y.begin();
+		auto last2 = y.end();
 		while (first1 != last1 && first2 != last2 && *first1 == *first2)
 		{
-			++first1;
-			++first2;
+		++first1;
+		++first2;
 		}
 		return first1==last1&&first2==last2;
 	}
 
 	template<class T>
-	bool deque<T>::operator!=(const deque& x)
+	inline bool operator!=(const deque<T>&x,const deque<T>& y)
 	{
-		return !(*this==x);
+		return !(x==y);
 	}
+
+	template<class T>
+	inline bool operator<(const deque<T>& x,const deque<T>& y)
+	{
+		return lexicographical_compare(x.begin(),x.end(),y.begin(),y.end());
+	}
+
+	template<class T>
+	inline bool operator>(const deque<T>& x,const deque<T>& y)
+	{
+		return y<x;
+	}
+
+	template<class T>
+	inline bool operator<=(const deque<T>& x,const deque<T>& y)
+	{
+		return !(x>y);
+	}
+
+	template<class T>
+	inline bool operator>=(const deque<T>& x,const deque<T>& y)
+	{
+		return !(x<y);
+	}
+
+
 }
 #endif
