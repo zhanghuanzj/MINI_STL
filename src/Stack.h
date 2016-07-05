@@ -1,5 +1,5 @@
-#ifndef _MINI_STL_STACK_H_
-#define _MINI_STL_STACK_H_
+#ifndef _MINI_STL_MINI_STL_STACK_H_
+#define _MINI_STL_MINI_STL_STACK_H_
 
 #include "Deque.h"
 namespace MINI_STL

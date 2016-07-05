@@ -109,7 +109,7 @@ namespace MINI_STL
 		}
 		//¸³Öµ
 		vector<T,Alloc>& operator=(const vector<T,Alloc>& v);
-		vector<T,Alloc>& operator=(const vector<T,Alloc>&& v);
+		vector<T,Alloc>& operator=(vector<T,Alloc>&& v);
 		void swap(vector &v);
 		//ÔªËØ·ÃÎÊ
 		reference operator[](const difference_type n){return *(begin()+n);}
@@ -240,33 +240,33 @@ namespace MINI_STL
 	{
 		if (this!=&v)
 		{
-			const size_type size= v.size();
-			if (size>capacity())
+			const size_type len= v.size();
+			if (len>capacity())
 			{
-				iterator temp = allocate_and_copy(v.begin(),v.end());
+				iterator temp = allocate_and_copy(len,v.begin(),v.end());
 				destroy(start,finish);
 				deallocate();
 				start = temp;
-				finish = temp+size;
+				finish = temp+len;
 				end_of_storage = finish;
 			}
-			else if (size<size())
+			else if (len<size())
 			{
 				iterator temp = copy(v.begin(),v.end(),start);
 				destroy(temp,finish);
-				finish = start+size;
+				finish = start+len;
 			}
 			else
 			{
 				copy(v.begin(),v.begin()+size(),start);
-				finish = Uninitialized_copy(v.begin()+size(),finish);
+				finish = Uninitialized_copy(v.begin()+size(),v.end(),finish);
 			}
 		}
 		return *this;
 	}
 
 	template<class T,class Alloc>
-	vector<T,Alloc>& vector<T,Alloc>::operator=(const vector<T,Alloc>&& v)
+	vector<T,Alloc>& vector<T,Alloc>::operator=(vector<T,Alloc>&& v)
 	{
 		if (this!=&v)
 		{

@@ -82,13 +82,17 @@
     <ClInclude Include="..\..\src\Construct.h" />
     <ClInclude Include="..\..\src\Deque.h" />
     <ClInclude Include="..\..\src\Functional.h" />
+    <ClInclude Include="..\..\src\Heap.h" />
     <ClInclude Include="..\..\src\Iterator.h" />
     <ClInclude Include="..\..\src\List.h" />
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />
+    <ClInclude Include="..\..\src\Queue.h" />
     <ClInclude Include="..\..\src\ReverseIterator.h" />
     <ClInclude Include="..\..\src\Stack.h" />
     <ClInclude Include="..\..\src\Test\DequeTest.h" />
     <ClInclude Include="..\..\src\Test\ListTest.h" />
+    <ClInclude Include="..\..\src\Test\PriorityQueueTest.h" />
+    <ClInclude Include="..\..\src\Test\QueueTest.h" />
     <ClInclude Include="..\..\src\Test\StackTest.h" />
     <ClInclude Include="..\..\src\Test\TestUtil.h" />
     <ClInclude Include="..\..\src\Test\VectorTest.h" />
@@ -102,6 +106,8 @@
     <ClCompile Include="..\..\src\Profiler\Profiler.cpp" />
     <ClCompile Include="..\..\src\Test\DequeTest.cpp" />
     <ClCompile Include="..\..\src\Test\ListTest.cpp" />
+    <ClCompile Include="..\..\src\Test\PriorityQueueTest.cpp" />
+    <ClCompile Include="..\..\src\Test\QueueTest.cpp" />
     <ClCompile Include="..\..\src\Test\StackTest.cpp" />
     <ClCompile Include="..\..\src\Test\VectorTest.cpp" />
   </ItemGroup>

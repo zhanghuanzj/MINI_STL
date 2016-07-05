@@ -91,7 +91,7 @@ namespace MINI_STL
 	template<class T>
 	struct _copy_dispatch<const T*,T*>
 	{
-		T* operator()(T *first,T *last,T *dest)
+		T* operator()(const T *first,const T *last,T *dest)
 		{
 			typedef typename _type_traits<T>::has_trivial_assignment_operator t;
 			return _copy_t(first,last,dest,t());
