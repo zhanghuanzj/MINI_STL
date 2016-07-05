@@ -88,7 +88,9 @@
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />
     <ClInclude Include="..\..\src\Queue.h" />
     <ClInclude Include="..\..\src\ReverseIterator.h" />
+    <ClInclude Include="..\..\src\Slist.h" />
     <ClInclude Include="..\..\src\Stack.h" />
+    <ClInclude Include="..\..\src\Test\BasicTest.h" />
     <ClInclude Include="..\..\src\Test\DequeTest.h" />
     <ClInclude Include="..\..\src\Test\ListTest.h" />
     <ClInclude Include="..\..\src\Test\PriorityQueueTest.h" />
@@ -104,6 +106,7 @@
     <ClCompile Include="..\..\src\Alloc.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Profiler\Profiler.cpp" />
+    <ClCompile Include="..\..\src\Test\BasicTest.cpp" />
     <ClCompile Include="..\..\src\Test\DequeTest.cpp" />
     <ClCompile Include="..\..\src\Test\ListTest.cpp" />
     <ClCompile Include="..\..\src\Test\PriorityQueueTest.cpp" />

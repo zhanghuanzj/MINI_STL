@@ -5,7 +5,6 @@
 
 #include "../Priority_queue.h"
 #include <queue>
-
 #include <algorithm>
 #include <cassert>
 #include <string>

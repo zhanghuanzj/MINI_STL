@@ -245,6 +245,16 @@ namespace MINI_STL
 		}
 		return first1==last1&&first2!=last2;
 	}
+
+	template <class InputIterator,class T>
+	InputIterator find(InputIterator first,InputIterator last,const T& value)
+	{
+		while (first!=last && *first!=value)
+		{
+			++first;
+		}
+		return first;
+	}
 }
 
 #endif
