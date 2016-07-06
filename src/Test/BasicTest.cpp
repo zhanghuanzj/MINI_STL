@@ -75,8 +75,52 @@ namespace MINI_STL
 
 		}
 
+		void rbtree_test()
+		{
+			RBTree<int,int,MINI_STL::identity<int>,MINI_STL::less<int>> tree;
+			assert(tree.size()==0);
+			tree.insert_unique(10);
+			tree.insert_unique(7);
+			tree.insert_unique(8);
+
+			tree.insert_unique(15);
+			tree.insert_unique(5);
+			tree.insert_unique(6);
+
+			tree.insert_unique(11);
+
+			tree.insert_unique(13);
+			tree.insert_unique(12);
+
+			assert(tree.size()==9);
+			int a[9] = {5,6,7,8,10,11,12,13,15};
+			assert(MINI_STL::Test::container_equal(a,tree));
+			/*auto it1 = tree.begin();
+			auto it2 = tree.end();
+			while (it1!=it2)
+			{
+				std::cout<<*it1<<" ";
+				++it1;
+			}
+			std::cout<<std::endl;*/
+
+			bool b[9] = {false,true,false,true,true,false,false,true,false};
+			bool result[9] ;
+
+			int index = 0;
+			auto it1 = tree.begin();
+			auto it2 = tree.end();
+			while (it1!=it2)
+			{
+				//std::cout<<*it1<<"("<<RBTree_iterator_base(it1).node->color<<")"<<" ";
+				result[index++] = RBTree_iterator_base(it1).node->color;
+				++it1;
+			}
+			assert(MINI_STL::Test::container_equal(b,result));
+		}
 		void testAllCases()
 		{
+			rbtree_test();
 			heapTest();
 			slist_test();	
 		}

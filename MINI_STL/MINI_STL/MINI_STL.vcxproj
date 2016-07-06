@@ -85,8 +85,10 @@
     <ClInclude Include="..\..\src\Heap.h" />
     <ClInclude Include="..\..\src\Iterator.h" />
     <ClInclude Include="..\..\src\List.h" />
+    <ClInclude Include="..\..\src\Pair.h" />
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />
     <ClInclude Include="..\..\src\Queue.h" />
+    <ClInclude Include="..\..\src\RBTree.h" />
     <ClInclude Include="..\..\src\ReverseIterator.h" />
     <ClInclude Include="..\..\src\Slist.h" />
     <ClInclude Include="..\..\src\Stack.h" />

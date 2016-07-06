@@ -7,9 +7,11 @@
 #include <forward_list>
 #include <iostream>
 #include <algorithm>
+#include "../Functional.h"
 #include "../Heap.h"
 #include "../Slist.h"
 #include "../Vector.h"
+#include "../RBTree.h"
 #include "TestUtil.h"
 
 namespace MINI_STL{
@@ -17,7 +19,7 @@ namespace MINI_STL{
 
 		void heapTest();
 		void slist_test();
-
+		void rbtree_test();
 		void testAllCases();
 	}
 }
