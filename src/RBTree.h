@@ -246,6 +246,159 @@ namespace MINI_STL
 		root->color = black;
 	}
 
+	//Z指向需要删除的节点，Y指向实质结构上被删除的
+	inline RBTree_node_base* rebalance_for_erase(RBTree_node_base* z,RBTree_node_base*& root,
+		RBTree_node_base*& leftmost,RBTree_node_base*& rightmost)
+	{
+	  	RBTree_node_base* y = z;
+	  	RBTree_node_base* x = 0;
+	  	RBTree_node_base* x_parent = 0;
+	  	//y指向最终要删除的节点，x为y的子节点
+	  	if (y->left == 0)     	// z 至多有一个非空子节点
+	   		x = y->right;     
+	  	else
+	    	if (y->right == 0)  // z 只有一个左子节点
+	      		x = y->left;    
+		   	else 
+		   	{              		// z 有两个非空子节点，y为z的后继
+		      	y = y->right;  
+		      	while (y->left != 0)
+		        	y = y->left;
+		      	x = y->right;
+		    }
+	  	if (y != z) 
+	  	{   
+	  		//swap(y,z)      
+	    	z->left->parent = y; 		//1
+	   	 	y->left = z->left;			//2
+	    	if (y != z->right) 
+	    	{
+	    		//调节x_parent及x
+	      		x_parent = y->parent;
+	      		if (x) x->parent = y->parent;  
+	      		y->parent->left = x; 
+
+	      		y->right = z->right;	//3
+	      		z->right->parent = y;	//4
+	   	 	}
+	   		else  //后继为右子节点
+	      		x_parent = y;  
+	    	if (root == z)              //5
+	      		root = y;
+	    	else if (z->parent->left == z)
+	      		z->parent->left = y;
+	    	else 
+	      		z->parent->right = y;
+	    	y->parent = z->parent;      //6
+	    	MINI_STL::swap(y->color, z->color);
+	    	y = z;
+	    	// y现在指向最终要删除的节点
+	  	}
+	  	else 	// y == z
+	  	{     
+	  		//调整x及x_parent                   
+	    	x_parent = y->parent;
+	    	if (x) x->parent = y->parent;   
+	    	if (root == z)
+	      		root = x;
+	    	else 
+	      		if (z->parent->left == z)
+	        		z->parent->left = x;
+	      		else
+	        		z->parent->right = x;
+	        //更新最左节点	
+	    	if (leftmost == z) 
+	      		if (z->right == nullptr)       	 
+	        		leftmost = z->parent;
+	      		else
+	        		leftmost = RBTree_node_base::minimum(x);
+	        //更新最右节点
+	    	if (rightmost == z)  
+	      		if (z->left == 0)        		 
+	        		rightmost = z->parent;  
+	      		else                    
+	        		rightmost = RBTree_node_base::maximum(x);
+	  	}
+	  	if (y->color != red) 	//删除黑色节点需要调整
+	  	{ 
+	    	while (x != root && (x == 0 || x->color == black))
+	      		if (x == x_parent->left) 
+	      		{
+	        		RBTree_node_base* w = x_parent->right;//x的兄弟节点
+	        		//case1:w为红色，则w的儿子必然全黑，w父亲x_parent也为黑
+	        		//改变x_parent与w的颜色，同时对x_parent做一次左旋，这样就将情况1转变为情况2,3,4的一种
+	        		if (w->color == red) 
+	        		{
+	          			w->color = black;
+	          			x_parent->color = red;
+	          			rotate_left(x_parent, root);
+	          			w = x_parent->right;
+	        		}
+	        		//case2:w的双子均为黑，将w置黑
+			        if ((w->left == 0 || w->left->color == black) && (w->right == 0 ||w->right->color == black)) 
+			        {
+			          	w->color = red;
+			          	x = x_parent;
+			          	x_parent = x_parent->parent;
+			        } 
+			        else 
+			        {
+			        	//case3:w左红右黑，交换w与左孩子的颜色，对w进行右旋，进行4
+	          			if (w->right == 0 ||w->right->color == black) 
+	          			{
+	            			if (w->left) w->left->color = black;
+					            w->color = red;
+					        rotate_right(w, root);
+					        w = x_parent->right;
+	          			}
+	          			//case4:右为红
+	          			//交换w与父亲p颜色，同时对p做左旋。这样左边缺失的黑色就补回来了，同时，将w的右儿子置黑，这样左右都达到平衡
+	          			w->color = x_parent->color;
+	          			x_parent->color = black;
+	          			if (w->right) w->right->color = black;
+	          			rotate_left(x_parent, root);
+	          			break;
+	        		}
+	      		} 
+	      		else 
+	      		{                  // same as above, with right <-> left.
+		        	RBTree_node_base* w = x_parent->left;
+		        	if (w->color == red) 
+		        	{
+		          		w->color = black;
+		          		x_parent->color = red;
+		          		rotate_right(x_parent, root);
+		          		w = x_parent->left;
+		        	}
+		        	if ((w->right == 0 || w->right->color == black) &&(w->left == 0 || w->left->color == black)) 
+		        	{
+				          w->color = red;
+				          x = x_parent;
+				          x_parent = x_parent->parent;
+		        	} 
+		        	else 
+		        	{
+		          		if (w->left == 0 || w->left->color == black) 
+		          		{
+		            		if (w->right) w->right->color = black;
+		            		w->color = red;
+		            		rotate_left(w, root);
+		            		w = x_parent->left;
+		          		}
+		          		w->color = x_parent->color;
+						x_parent->color = black;
+						if (w->left) w->left->color = black;
+						rotate_right(x_parent, root);
+						break;
+		        	}
+	    		}
+		    //将x置黑
+		    if (x) x->color = black;
+	  	}
+	  	return y;
+	}
+
+
 	template <class Key,class Value,class KeyOfValue,class Compare>
 	class RBTree
 	{
@@ -294,14 +447,14 @@ namespace MINI_STL
 	  	static Link_type& right(Link_type x){ return (Link_type&)(x->right); }
 	  	static Link_type& parent(Link_type x){ return (Link_type&)(x->parent); }
 	  	static reference value(Link_type x){ return x->data; }
-	  	static const Key& key(Link_type x){ return KeyOfValue()(value(x)); }
+	  	static const Key& getKey(Link_type x){ return KeyOfValue()(value(x)); }
 	  	static RBTree_color& color(Link_type x){ return (RBTree_color&)(x->color); }
 
 	  	static Link_type& left(base_ptr x){ return (Link_type&)(x->left); }
 	  	static Link_type& right(base_ptr x){ return (Link_type&)(x->right); }
 	  	static Link_type& parent(base_ptr x){ return (Link_type&)(x->parent); }
 	  	static reference value(base_ptr x){ return ((Link_type)x)->data; }
-	  	static const Key& key(base_ptr x){ return KeyOfValue()(value(Link_type(x)));} 
+	  	static const Key& getKey(base_ptr x){ return KeyOfValue()(value(Link_type(x)));} 
 	  	static RBTree_color& color(base_ptr x){ return (RBTree_color&)(Link_type(x)->color); }
 
 	  	static Link_type minimum(Link_type x) { return (Link_type)  RBTree_node_base::minimum(x); }
@@ -317,8 +470,9 @@ namespace MINI_STL
 
 	private:
 		iterator insert(base_ptr pos,base_ptr par,const value_type& v);
+		void erase_recursive(Node* x);
 		Node* copy(Node* x,Node* y);
-		void erase(Node* x);
+		void clear(); 
 		void init()
 		{
 			header = nodeAllocator::allocate();
@@ -330,7 +484,7 @@ namespace MINI_STL
 	public:
 		RBTree():node_count(0),header(nullptr),key_compare(){init();}
 		RBTree(const Compare& comp):node_count(0),header(nullptr),key_compare(comp){init();}
-		~RBTree(){}
+		~RBTree(){clear(),destroy_node(header);}
 
 		iterator begin() {return leftmost();}
 		iterator end() {return header;}
@@ -338,10 +492,37 @@ namespace MINI_STL
 		const_iterator end()const {return header;}
 
 		size_type size()const {return node_count;}
-		pair<iterator,bool> insert_equal(const value_type& v);
-		pair<iterator,bool> insert_unique(const value_type& v);
+		bool empty()const {return node_count==0;}
 		iterator find(const Key& k);
+		const_iterator find(const Key& k)const;
+		size_type count(const Key& k)const;
+		//插入
+		pair<iterator,bool> insert_equal(const value_type& v);
+		void insert_equal(const_iterator first,const_iterator last);
+		void insert_equal(const value_type* first,const value_type* last);
+		template <class InputIterator>
+		void insert_equal(InputIterator first,InputIterator last);
+		pair<iterator,bool> insert_unique(const value_type& v);
+		void insert_unique(const_iterator first,const_iterator last);
+		void insert_unique(const value_type* first,const value_type* last);
+		template <class InputIterator>
+		void insert_unique(InputIterator first,InputIterator last);
 
+		//删除
+		void erase(iterator position);
+		size_type erase(const key_type& x);
+		void erase(iterator first, iterator last);
+		void erase(const Key* first,const Key* last);
+		
+		
+		//边界
+		iterator lower_bound(const Key& k);
+		const_iterator lower_bound(const Key& k)const;
+		iterator upper_bound(const Key& k);
+		const_iterator upper_bound(const Key& k)const;
+		pair<iterator,iterator> equal_range(const Key& key);
+		pair<const_iterator,const_iterator> equal_range(const Key& key)const;
+		
 	};
 
 	//pos为新值插入位置，parent为插入点父节点
@@ -352,7 +533,7 @@ namespace MINI_STL
 		Node* x =(Node*)pos;
 		Node* y = (Node*)par;
 		Node* z;
-		if (y==header || x!=nullptr || key_compare(KeyOfValue()(v),key(y)))
+		if (y==header || x!=nullptr || key_compare(KeyOfValue()(v),getKey(y)))
 		{
 			z = create_node(v);
 			left(y) = z;
@@ -392,11 +573,41 @@ namespace MINI_STL
 		while(x!=nullptr)
 		{
 			y = x;
-			x = key_compare(KeyOfValue()(v),key(x))?left(x):right(x);
+			x = key_compare(KeyOfValue()(v),getKey(x))?left(x):right(x);
 		}
 		return insert(x,y,v);
 	}     
 
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::insert_equal(const value_type* first,const value_type* last)  
+	{
+		while(first!=last)
+		{
+			insert_equal(*first);
+			++first;
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::insert_equal(const_iterator first,const_iterator last)  
+	{
+		while(first!=last)
+		{
+			insert_equal(*first);
+			++first;
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	template <class InputIterator>
+	void RBTree< Key, Value, KeyOfValue, Compare>::insert_equal(InputIterator first,InputIterator last)  
+	{
+		while(first!=last)
+		{
+			insert_equal(*first);
+			++first;
+		}
+	}
 	template <class Key,class Value,class KeyOfValue,class Compare>
 	pair<typename RBTree<Key,Value, KeyOfValue, Compare>::iterator,bool>
 	RBTree< Key, Value, KeyOfValue, Compare>::insert_unique(const value_type& v)  
@@ -407,7 +618,7 @@ namespace MINI_STL
 		while(x!=0)
 		{
 			y = x;
-			isLeft = key_compare(KeyOfValue()(v),key(x));
+			isLeft = key_compare(KeyOfValue()(v),getKey(x));
 			x = isLeft?left(x):right(x);
 		}
 
@@ -423,11 +634,42 @@ namespace MINI_STL
 				--j;
 			}
 		}
-		if (key_compare(key(j.node),KeyOfValue()(v)))
+		if (key_compare(getKey(j.node),KeyOfValue()(v)))
 		{
 			return pair<iterator,bool>(insert(x,y,v),true);
 		}
 		return pair<iterator,bool>(j,false);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::insert_unique(const value_type* first,const value_type* last)  
+	{
+		while(first!=last)
+		{
+			insert_unique(*first);
+			++first;
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::insert_unique(const_iterator first,const_iterator last)  
+	{
+		while(first!=last)
+		{
+			insert_unique(*first);
+			++first;
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	template <class InputIterator>
+	void RBTree< Key, Value, KeyOfValue, Compare>::insert_unique(InputIterator first,InputIterator last)  
+	{
+		while(first!=last)
+		{
+			insert_unique(*first);
+			++first;
+		}
 	}
 
 	template <class Key,class Value,class KeyOfValue,class Compare>
@@ -438,7 +680,7 @@ namespace MINI_STL
 		Node* x = root();
 		while(x!=nullptr)
 		{
-			if (!key_compare(key(x),k))
+			if (!key_compare(getKey(x),k))
 			{	
 				y = x,x = left(x);
 			}
@@ -448,7 +690,200 @@ namespace MINI_STL
 			}
 		}
 		iterator j = iterator(y);
-		return (j==end() || key_compare(k,key(j.node)))?end():j;
+		return (j==end() || key_compare(k,getKey(j.node)))?end():j;
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator
+	RBTree< Key, Value, KeyOfValue, Compare>::find(const Key& k)const
+	{
+		Node* y = header;
+		Node* x = root();
+		while(x!=nullptr)
+		{
+			if (!key_compare(getKey(x),k))
+			{	
+				y = x,x = left(x);
+			}
+			else
+			{
+				x = right(x);
+			}
+		}
+		iterator j = iterator(y);
+		return (j==end() || key_compare(k,getKey(j.node)))?end():j;
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::size_type
+	RBTree< Key, Value, KeyOfValue, Compare>::count(const Key& k)const
+	{
+		pair<const_iterator,const_iterator> p = equal_range(k);
+		return distance(p.first,p.second);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::erase(iterator position)
+	{
+		Node* y = (Node*)rebalance_for_erase(position.node,header->parent,header->left,header->right);
+		destroy_node(y);
+		--node_count;
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::size_type
+	RBTree< Key, Value, KeyOfValue, Compare>::erase(const Key& x)
+	{
+		pair<iterator,iterator> p = equal_range(x);
+		size_type n = distance(p.first,p.second);
+		erase(p.first,p.second);
+		return n;
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::erase_recursive(Node* x)
+	{
+		while(x!=nullptr)
+		{
+			erase_recursive(right(x));
+			Node* y = left(x);
+			destroy_node(x);
+			x = y;
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::erase(iterator first,iterator last)
+	{
+		if (first==begin()&&last==end())
+		{
+			clear();
+		}
+		else
+		{
+			while(first!=last)
+				erase(first++);
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::erase(const Key* first,const Key* last)
+	{
+		while(first!=last)
+			erase(*first++);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	void RBTree< Key, Value, KeyOfValue, Compare>::clear()
+	{
+		if (node_count!=0)
+		{
+			erase_recursive(root());
+			leftmost() = header;
+			root() = nullptr;
+			rightmost() = header;
+			node_count = 0;
+		}
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::iterator
+	RBTree< Key, Value, KeyOfValue, Compare>::lower_bound(const Key& k)
+	{
+		Node* y = header;
+		Node* x = root();
+		while(x!=nullptr)
+		{
+			if (!key_compare(getKey(x),k)) //x>=k
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+			{
+				x = right(x);
+			}
+		}
+		return iterator(y);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator
+	RBTree< Key, Value, KeyOfValue, Compare>::lower_bound(const Key& key)const
+	{
+		Node* y = header;
+		Node* x = root();
+		while(x!=nullptr)
+		{
+			if (!key_compare(getKey(x),k)) //x>=k
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+			{
+				x = right(x);
+			}
+		}
+		return const_iterator(y);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator
+	RBTree< Key, Value, KeyOfValue, Compare>::upper_bound(const Key& key)const
+	{
+		Node* y = header;
+		Node* x = root();
+		while(x!=nullptr)
+		{
+			if (key_compare(k,getKey(x))) //x>k,相同的是放在左边的
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+			{
+				x = right(x);
+			}
+		}
+		return const_iterator(y);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::iterator
+	RBTree< Key, Value, KeyOfValue, Compare>::upper_bound(const Key& k)
+	{
+		Node* y = header;
+		Node* x = root();
+		while(x!=nullptr)
+		{
+			if (key_compare(k,getKey(x))) //k>x
+			{
+				y = x;
+				x = left(x);
+			}
+			else
+			{
+				x = right(x);
+			}
+		}
+		return iterator(y);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline pair<typename RBTree< Key, Value, KeyOfValue, Compare>::iterator,
+				typename RBTree< Key, Value, KeyOfValue, Compare>::iterator>
+	RBTree< Key, Value, KeyOfValue, Compare>::equal_range(const Key& key)
+	{
+		return pair<iterator,iterator>(lower_bound(key),upper_bound(key));
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline pair<typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator,
+				typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator>
+	RBTree< Key, Value, KeyOfValue, Compare>::equal_range(const Key& key)const
+	{
+		return pair<const_iterator,const_iterator>(lower_bound(key),upper_bound(key));
 	}
 }
 #endif

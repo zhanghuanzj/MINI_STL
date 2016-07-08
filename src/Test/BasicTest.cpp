@@ -92,17 +92,23 @@ namespace MINI_STL
 			tree.insert_unique(13);
 			tree.insert_unique(12);
 
+			RBTree<int,int,MINI_STL::identity<int>,MINI_STL::less<int>> tree2;
+			tree2.insert_unique(tree.begin(),tree.end());
 			assert(tree.size()==9);
+			assert(tree2.size()==9);
 			int a[9] = {5,6,7,8,10,11,12,13,15};
+			assert(MINI_STL::Test::container_equal(a,tree2));
 			assert(MINI_STL::Test::container_equal(a,tree));
-			/*auto it1 = tree.begin();
-			auto it2 = tree.end();
-			while (it1!=it2)
+
+			
+			auto i1 = tree.begin();
+			auto i2 = tree.end();
+			while (i1!=i2)
 			{
-				std::cout<<*it1<<" ";
-				++it1;
+				std::cout<<*i1<<" ";
+				++i1;
 			}
-			std::cout<<std::endl;*/
+			std::cout<<std::endl;
 
 			bool b[9] = {false,true,false,true,true,false,false,true,false};
 			bool result[9] ;
@@ -117,6 +123,9 @@ namespace MINI_STL
 				++it1;
 			}
 			assert(MINI_STL::Test::container_equal(b,result));
+
+			tree.erase(8);
+			assert(tree.size()==8);
 		}
 		void testAllCases()
 		{
