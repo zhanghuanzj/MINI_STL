@@ -4,7 +4,7 @@ namespace MINI_STL
 {
 	namespace BasicTest{
 		
-		void heapTest()
+		void heap_test()
 		{
 			int ia[9] = {0,1,2,3,4,8,9,3,5};
 			MINI_STL::vector<int> vec(ia,ia+9);
@@ -28,6 +28,8 @@ namespace MINI_STL
 			MINI_STL::sort_heap(vec.begin(),vec.end());
 			std::sort_heap(vecTest.begin(),vecTest.end());
 			assert(MINI_STL::Test::container_equal(vec, vecTest));
+
+			std::cout<<"Heap test ok!"<<std::endl;
 		}
 
 
@@ -72,7 +74,7 @@ namespace MINI_STL
 				fl.erase_after(fit);
 			}
 			assert(MINI_STL::Test::container_equal(sl,fl));
-
+			std::cout<<"SList test ok!"<<std::endl;
 		}
 
 		void rbtree_test()
@@ -101,14 +103,14 @@ namespace MINI_STL
 			assert(MINI_STL::Test::container_equal(a,tree));
 
 			
-			auto i1 = tree.begin();
-			auto i2 = tree.end();
-			while (i1!=i2)
-			{
-				std::cout<<*i1<<" ";
-				++i1;
-			}
-			std::cout<<std::endl;
+			//auto i1 = tree.begin();
+			//auto i2 = tree.end();
+			//while (i1!=i2)
+			//{
+			//	std::cout<<*i1<<" ";
+			//	++i1;
+			//}
+			//std::cout<<std::endl;
 
 			bool b[9] = {false,true,false,true,true,false,false,true,false};
 			bool result[9] ;
@@ -126,12 +128,43 @@ namespace MINI_STL
 
 			tree.erase(8);
 			assert(tree.size()==8);
+
+			std::cout<<"RBTree test ok!"<<std::endl;
+		}
+
+		void set_test()
+		{
+			int a[5] = {0,1,2,3,4};
+			std::set<int> s1(a,a+5);
+			MINI_STL::set<int> s2(a,a+5);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+
+			s1.insert(3);
+			s2.insert(3);
+			s1.insert(5);
+			s2.insert(5);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+			s1.erase(1);
+			s2.erase(1);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+			assert(s1.size()==s2.size());
+			assert(s1.count(3)==s2.count(3));
+
+			auto i1 = s1.find(3);
+			auto i2 = s2.find(3);
+			assert(*i1==*i2);
+
+			i1 = s1.find(1);
+			i2 = s2.find(1);
+			assert(i1==s1.end()&&i2==s2.end());
+			std::cout<<"Set test ok!"<<std::endl;
 		}
 		void testAllCases()
 		{
 			rbtree_test();
-			heapTest();
+			heap_test();
 			slist_test();	
+			set_test();
 		}
 	}
 }

@@ -99,6 +99,7 @@ namespace MINI_STL{
 			testCase4();
 			testCase5();
 			testCase6();
+			std::cout<<"Deque test ok!"<<std::endl;
 		}
 	}
 }

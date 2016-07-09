@@ -7,6 +7,7 @@
  - iterator traits：100%
  - reverse_iterator：100%
  - heap：100%
+ - 红黑树：100%
 
 ## 基本组件
 ### vector  
@@ -17,14 +18,21 @@
  - 进度：100%
  - 单元测试：100%
 
+### slist
+ - 进度：100%
+ - 单元测试：100%
+
 ### deque
  - 进度：100%
  - 单元测试：100%
 
-### stack | stack | priority_queue
+### stack | queue | priority_queue
   - 进度：100%
   - 单元测试：100%
 
+### set
+ - 进度：100%
+ - 单元测试：100%
 
 ## STL Algorithms:
  - max：100%

@@ -50,6 +50,7 @@ namespace MINI_STL{
 			testCase2();
 			testCase3();
 			testCase4();
+			std::cout<<"Stack test ok!"<<std::endl;
 		}
 	}
 }

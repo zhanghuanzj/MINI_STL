@@ -90,6 +90,7 @@
     <ClInclude Include="..\..\src\Queue.h" />
     <ClInclude Include="..\..\src\RBTree.h" />
     <ClInclude Include="..\..\src\ReverseIterator.h" />
+    <ClInclude Include="..\..\src\Set.h" />
     <ClInclude Include="..\..\src\Slist.h" />
     <ClInclude Include="..\..\src\Stack.h" />
     <ClInclude Include="..\..\src\Test\BasicTest.h" />

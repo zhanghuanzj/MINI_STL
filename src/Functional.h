@@ -6,7 +6,7 @@ namespace MINI_STL
 	template<class T>
 	struct less
 	{
-		bool operator()(const T& x,const T& y)
+		bool operator()(const T& x,const T& y)const
 		{
 			return x<y;
 		}
@@ -15,7 +15,7 @@ namespace MINI_STL
 	template<class T>
 	struct identity
 	{
-		const T& operator()(const T& x)
+		const T& operator()(const T& x)const
 		{
 			return x;
 		}

@@ -247,6 +247,7 @@ namespace MINI_STL{
 			testCase13();
 			testCase14();
 			testCase15();
+			std::cout<<"Vector test ok!"<<std::endl;
 		}
 	}
 }

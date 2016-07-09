@@ -402,7 +402,7 @@ namespace MINI_STL
 	template <class Key,class Value,class KeyOfValue,class Compare>
 	class RBTree
 	{
-	protected:
+	public:
 		typedef RBTree_node_base* base_ptr;
 		typedef RBTree_node<Value> Node;
 		typedef Allocator<Node> nodeAllocator;
@@ -471,7 +471,7 @@ namespace MINI_STL
 	private:
 		iterator insert(base_ptr pos,base_ptr par,const value_type& v);
 		void erase_recursive(Node* x);
-		Node* copy(Node* x,Node* y);
+		Node* copy_tree(Node* x,Node* p);
 		void clear(); 
 		void init()
 		{
@@ -484,12 +484,19 @@ namespace MINI_STL
 	public:
 		RBTree():node_count(0),header(nullptr),key_compare(){init();}
 		RBTree(const Compare& comp):node_count(0),header(nullptr),key_compare(comp){init();}
-		~RBTree(){clear(),destroy_node(header);}
+		RBTree& operator=(const RBTree& x);
+		~RBTree(){clear();destroy_node(header);}
 
 		iterator begin() {return leftmost();}
 		iterator end() {return header;}
-		const_pointer begin()const {return leftmost();}
+		const_iterator begin()const {return leftmost();}
 		const_iterator end()const {return header;}
+		void swap(RBTree& t)
+		{ 
+			MINI_STL::swap(header,t.header); 
+			MINI_STL::swap(node_count,t.node_count);
+			MINI_STL::swap(key_compare,t.key_compare);
+		}
 
 		size_type size()const {return node_count;}
 		bool empty()const {return node_count==0;}
@@ -525,6 +532,32 @@ namespace MINI_STL
 		
 	};
 
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	RBTree< Key, Value, KeyOfValue, Compare>& RBTree< Key, Value, KeyOfValue, Compare>::operator=
+	(const RBTree< Key, Value, KeyOfValue, Compare>&x)
+	{
+		if (this!=&x)
+		{
+			clear();
+			node_count = 0;
+			key_compare = x.key_compare;
+			if (x.root() == nullptr)
+			{
+				root() = nullptr;
+				leftmost() = header;
+				rightmost() = header;
+			}
+			else
+			{
+				root() = copy_tree(x.root(),header);
+				leftmost() = minimum(root());
+				rightmost() = maximum(root());
+				node_count = x.node_count;
+			}
+		}
+		return *this;
+	}
+	
 	//pos为新值插入位置，parent为插入点父节点
 	template <class Key,class Value,class KeyOfValue,class Compare>
 	typename RBTree< Key, Value, KeyOfValue, Compare>::iterator
@@ -774,6 +807,35 @@ namespace MINI_STL
 	}
 
 	template <class Key,class Value,class KeyOfValue,class Compare>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::Node* 
+	RBTree< Key, Value, KeyOfValue, Compare>::copy_tree(Node* x,Node* p)
+	{
+		Node* root = clone_node(x);
+		root->parent = p;
+
+		if (x->right)
+		{
+			root->right = copy_tree(right(x),root);
+		}
+		p = root;
+		x = left(x);
+
+		while(x!=nullptr)
+		{
+			Node* y = clone_node(x);
+			p->left = y;
+			y->parent = p;
+			if (x->right)
+			{
+				y->right = copy_tree(right(x),y);
+			}
+			p = y;
+			x = left(x);
+		}
+		return root;
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
 	void RBTree< Key, Value, KeyOfValue, Compare>::clear()
 	{
 		if (node_count!=0)
@@ -809,7 +871,7 @@ namespace MINI_STL
 
 	template <class Key,class Value,class KeyOfValue,class Compare>
 	typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator
-	RBTree< Key, Value, KeyOfValue, Compare>::lower_bound(const Key& key)const
+	RBTree< Key, Value, KeyOfValue, Compare>::lower_bound(const Key& k)const
 	{
 		Node* y = header;
 		Node* x = root();
@@ -830,7 +892,7 @@ namespace MINI_STL
 
 	template <class Key,class Value,class KeyOfValue,class Compare>
 	typename RBTree< Key, Value, KeyOfValue, Compare>::const_iterator
-	RBTree< Key, Value, KeyOfValue, Compare>::upper_bound(const Key& key)const
+	RBTree< Key, Value, KeyOfValue, Compare>::upper_bound(const Key& k)const
 	{
 		Node* y = header;
 		Node* x = root();
@@ -885,5 +947,51 @@ namespace MINI_STL
 	{
 		return pair<const_iterator,const_iterator>(lower_bound(key),upper_bound(key));
 	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline bool 
+	operator==(const RBTree< Key, Value, KeyOfValue, Compare>& x, 
+	           const RBTree< Key, Value, KeyOfValue, Compare>& y)
+	{
+	  return x.size() == y.size() && equal(x.begin(), x.end(), y.begin());
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline bool 
+	operator<(const RBTree< Key, Value, KeyOfValue, Compare>& x, 
+	          const RBTree< Key, Value, KeyOfValue, Compare>& y)
+	{
+	  return lexicographical_compare(x.begin(), x.end(), 
+	                                 y.begin(), y.end());
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline bool 
+	operator!=(const RBTree< Key, Value, KeyOfValue, Compare>& x, 
+	           const RBTree< Key, Value, KeyOfValue, Compare>& y) {
+	  return !(x == y);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline bool 
+	operator>(const RBTree< Key, Value, KeyOfValue, Compare>& x, 
+	          const RBTree< Key, Value, KeyOfValue, Compare>& y) {
+	  return y < x;
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline bool 
+	operator<=(const RBTree< Key, Value, KeyOfValue, Compare>& x, 
+	           const RBTree< Key, Value, KeyOfValue, Compare>& y) {
+	  return !(y < x);
+	}
+
+	template <class Key,class Value,class KeyOfValue,class Compare>
+	inline bool 
+	operator>=(const RBTree< Key, Value, KeyOfValue, Compare>& x, 
+	           const RBTree< Key, Value, KeyOfValue, Compare>& y) {
+	  return !(x < y);
+	}
+
 }
 #endif

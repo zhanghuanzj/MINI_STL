@@ -238,6 +238,7 @@ namespace MINI_STL{
 			testCase13();
 			testCase14();
 			testCase15();
+			std::cout<<"List test ok!"<<std::endl;
 		}
 	}
 }

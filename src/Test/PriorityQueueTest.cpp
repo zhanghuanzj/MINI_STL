@@ -73,6 +73,7 @@ namespace MINI_STL{
 			testCase3();
 			testCase4();
 			testCase5();
+			std::cout<<"PriorityQueue test ok!"<<std::endl;
 		}
 	}
 }
