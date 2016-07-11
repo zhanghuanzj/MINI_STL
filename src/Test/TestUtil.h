@@ -27,6 +27,17 @@ namespace MINI_STL{
 			}
 			return (first1 == last1 && first2 == last2);
 		}
+
+		template<class Container1, class Container2>
+		bool map_equal(Container1& con1, Container2& con2){
+			auto first1 = std::begin(con1), last1 = std::end(con1);
+			auto first2 = std::begin(con2), last2 = std::end(con2);
+			for (; first1 != last1 && first2 != last2; ++first1, ++first2){
+				if (((*first1).first != (*first2).first)||((*first1).second != (*first2).second))
+					return false;
+			}
+			return (first1 == last1 && first2 == last2);
+		}
 	}
 }
 

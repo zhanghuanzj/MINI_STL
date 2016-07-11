@@ -504,7 +504,7 @@ namespace MINI_STL
 		const_iterator find(const Key& k)const;
 		size_type count(const Key& k)const;
 		//插入
-		pair<iterator,bool> insert_equal(const value_type& v);
+		iterator insert_equal(const value_type& v);
 		void insert_equal(const_iterator first,const_iterator last);
 		void insert_equal(const value_type* first,const value_type* last);
 		template <class InputIterator>
@@ -598,7 +598,7 @@ namespace MINI_STL
 	}
 
 	template <class Key,class Value,class KeyOfValue,class Compare>
-	pair<typename RBTree< Key, Value, KeyOfValue, Compare>::iterator,bool>
+	typename RBTree< Key, Value, KeyOfValue, Compare>::iterator
 	RBTree< Key, Value, KeyOfValue, Compare>::insert_equal(const value_type& v)   
 	{
 		Node* y = header;

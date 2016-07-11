@@ -20,5 +20,14 @@ namespace MINI_STL
 			return x;
 		}
 	};
+
+	template<class Pair>
+	struct selectFirst
+	{
+		const typename Pair::first_type& operator()(const Pair& x)const
+		{
+			return x.first;
+		}
+	};
 }
 #endif

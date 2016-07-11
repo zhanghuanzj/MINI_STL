@@ -8,12 +8,17 @@
 #include <iostream>
 #include <algorithm>
 #include <set>
+#include <string>
+#include <map>
 #include "../Functional.h"
 #include "../Heap.h"
 #include "../Slist.h"
 #include "../Vector.h"
 #include "../RBTree.h"
 #include "../Set.h"
+#include "../Multiset.h"
+#include "../Map.h"
+#include "../Multimap.h"
 #include "TestUtil.h"
 
 namespace MINI_STL{
@@ -22,6 +27,10 @@ namespace MINI_STL{
 		void heap_test();
 		void slist_test();
 		void rbtree_test();
+		void set_test();
+		void multiset_test();
+		void map_test();
+		void multimap_test();
 		void testAllCases();
 	}
 }

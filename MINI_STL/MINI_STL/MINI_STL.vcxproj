@@ -85,6 +85,9 @@
     <ClInclude Include="..\..\src\Heap.h" />
     <ClInclude Include="..\..\src\Iterator.h" />
     <ClInclude Include="..\..\src\List.h" />
+    <ClInclude Include="..\..\src\Map.h" />
+    <ClInclude Include="..\..\src\Multimap.h" />
+    <ClInclude Include="..\..\src\Multiset.h" />
     <ClInclude Include="..\..\src\Pair.h" />
     <ClInclude Include="..\..\src\Profiler\Profiler.h" />
     <ClInclude Include="..\..\src\Queue.h" />

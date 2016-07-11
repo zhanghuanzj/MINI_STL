@@ -159,12 +159,112 @@ namespace MINI_STL
 			assert(i1==s1.end()&&i2==s2.end());
 			std::cout<<"Set test ok!"<<std::endl;
 		}
+
+		void multiset_test()
+		{
+			int a[5] = {0,1,2,3,4};
+			std::multiset<int> s1(a,a+5);
+			MINI_STL::multiset<int> s2(a,a+5);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+
+			s1.insert(3);
+			s2.insert(3);
+			s1.insert(5);
+			s2.insert(5);
+			s1.insert(3);
+			s2.insert(3);
+			s1.insert(5);
+			s2.insert(5);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+			s1.erase(1);
+			s2.erase(1);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+			assert(s1.size()==s2.size());
+			assert(s1.count(3)==s2.count(3));
+
+			s1.erase(3);
+			s2.erase(3);
+			assert(MINI_STL::Test::container_equal(s1,s2));
+			assert(s1.size()==s2.size());
+			assert(s1.count(3)==s2.count(3));
+			auto i1 = s1.find(5);
+			auto i2 = s2.find(5);
+			assert(*i1==*i2);
+
+			i1 = s1.find(3);
+			i2 = s2.find(3);
+			assert(i1==s1.end()&&i2==s2.end());
+			std::cout<<"Multiset test ok!"<<std::endl;
+		}
+
+		void map_test()
+		{
+			std::map<std::string,int> m1;
+			MINI_STL::map<std::string,int> m2;
+			m1[std::string("one")] = 1;
+			m1[std::string("two")] = 2;
+			m1[std::string("three")] = 3;
+			m1[std::string("four")] = 4;
+
+			m2[std::string("one")] = 1;
+			m2[std::string("two")] = 2;
+			m2[std::string("three")] = 3;
+			m2[std::string("four")] = 4;
+			assert(MINI_STL::Test::map_equal(m1,m2));
+			
+			m1.insert(make_pair(std::string("five"),5));
+			m2.insert(MINI_STL::make_pair(std::string("five"),5));
+			assert(MINI_STL::Test::map_equal(m1,m2));
+			assert(m1[std::string("three")]==m2[std::string("three")]);
+
+			m1[std::string("three")] = 8;
+			m2[std::string("three")] = 8;
+			assert(MINI_STL::Test::map_equal(m1,m2));
+
+			auto it1 = m1.find(std::string("three"));
+			auto it2 = m2.find(std::string("three"));
+			assert((*it1).second == (*it2).second );
+			std::cout<<"Map test ok!"<<std::endl;
+		}
+
+		void multimap_test()
+		{
+			std::multimap<std::string,int> m1;
+			MINI_STL::multimap<std::string,int> m2;
+			m1.insert(make_pair(std::string("one"),1));
+			m1.insert(make_pair(std::string("two"),2));
+			m1.insert(make_pair(std::string("three"),3));
+			m1.insert(make_pair(std::string("four"),4));
+			m1.insert(make_pair(std::string("three"),3));
+			m1.insert(make_pair(std::string("four"),4));
+
+			m2.insert(MINI_STL::make_pair(std::string("one"),1));
+			m2.insert(MINI_STL::make_pair(std::string("two"),2));
+			m2.insert(MINI_STL::make_pair(std::string("three"),3));
+			m2.insert(MINI_STL::make_pair(std::string("four"),4));
+			m2.insert(MINI_STL::make_pair(std::string("three"),3));
+			m2.insert(MINI_STL::make_pair(std::string("four"),4));
+
+			assert(MINI_STL::Test::map_equal(m1,m2));
+
+			m1.insert(make_pair(std::string("five"),5));
+			m2.insert(MINI_STL::make_pair(std::string("five"),5));
+			assert(MINI_STL::Test::map_equal(m1,m2));
+
+			auto it1 = m1.find(std::string("three"));
+			auto it2 = m2.find(std::string("three"));
+			assert((*it1).second == (*it2).second );
+			std::cout<<"Multimap test ok!"<<std::endl;
+		}
 		void testAllCases()
 		{
 			rbtree_test();
 			heap_test();
 			slist_test();	
 			set_test();
+			multiset_test();
+			map_test();
+			multimap_test();
 		}
 	}
 }
