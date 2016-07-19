@@ -256,6 +256,13 @@ namespace MINI_STL
 			assert((*it1).second == (*it2).second );
 			std::cout<<"Multimap test ok!"<<std::endl;
 		}
+
+		void hashtable_test()
+		{
+			MINI_STL::hashtable<int,int,MINI_STL::hash<int>,identity<int>,std::equal_to<int>> ht(50,MINI_STL::hash<int>(),std::equal_to<int>());
+			std::cout<<ht.size();
+			std::cout<<"Hashtable test ok!"<<std::endl;
+		}
 		void testAllCases()
 		{
 			rbtree_test();
@@ -265,6 +272,7 @@ namespace MINI_STL
 			multiset_test();
 			map_test();
 			multimap_test();
+			hashtable_test();
 		}
 	}
 }

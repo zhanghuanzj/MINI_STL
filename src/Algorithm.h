@@ -255,6 +255,57 @@ namespace MINI_STL
 		}
 		return first;
 	}
+
+	template <class ForwardIterator,class T>
+	inline ForwardIterator lower_bound(ForwardIterator first,ForwardIterator last,const T& value)
+	{
+		return _lower_bound(first,last,value,difference_type(first),iterator_category(first));
+	}
+
+	template <class ForwardIterator,class T,class Distance>
+	inline ForwardIterator _lower_bound(ForwardIterator first,ForwardIterator last,const T& value,Distance*,forward_iterator_tag)
+	{
+		Distance len = distance(first,last);
+		Distance half;
+		ForwardIterator mid;
+		while(len>0)
+		{
+			half = len>>1;
+			mid = first;
+			advance(mid,half);
+			if(*mid<value)
+			{
+				first = mid;
+				++first;
+				len = len-half-1;
+			}
+			else
+				len = half;
+		}
+		return first;
+	}
+
+	template <class ForwardIterator,class T,class Distance>
+	inline ForwardIterator _lower_bound(ForwardIterator first,ForwardIterator last,const T& value,Distance*,random_access_iterator_tag)
+	{
+		Distance len = distance(first,last);
+		Distance half;
+		ForwardIterator mid;
+		while (len>0)
+		{
+			half = len>>1;
+			mid = first+half;
+			if (*mid<value)
+			{
+				first = mid+1;
+				len = len-half-1;
+			}
+			else
+				len = half;
+		}
+		return first;
+	}
+
 }
 
 #endif

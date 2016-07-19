@@ -19,6 +19,8 @@
 #include "../Multiset.h"
 #include "../Map.h"
 #include "../Multimap.h"
+#include "../HashTable.h"
+#include "../Hash_fcn.h"
 #include "TestUtil.h"
 
 namespace MINI_STL{
@@ -31,7 +33,9 @@ namespace MINI_STL{
 		void multiset_test();
 		void map_test();
 		void multimap_test();
+		void hashtable_test();
 		void testAllCases();
+
 	}
 }
 #endif
