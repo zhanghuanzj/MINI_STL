@@ -260,8 +260,42 @@ namespace MINI_STL
 		void hashtable_test()
 		{
 			MINI_STL::hashtable<int,int,MINI_STL::hash<int>,identity<int>,std::equal_to<int>> ht(50,MINI_STL::hash<int>(),std::equal_to<int>());
-			std::cout<<ht.size();
+			assert(ht.size()==0);
+			ht.insert_unique(59);
+			ht.insert_unique(63);
+			ht.insert_unique(108);
+			ht.insert_unique(2);
+			ht.insert_unique(53);
+			ht.insert_unique(55);
+			assert(ht.size()==6);
+			ht.erase(59);
+			assert(ht.size()==5);
+			auto it = ht.find(59);
+			assert(it==ht.end());
+			auto it2 = ht.find(108);
+			assert(*it2==108);
 			std::cout<<"Hashtable test ok!"<<std::endl;
+		}
+
+		void hashset_test()
+		{
+			hashset<int> s;
+			for (int i=0;i<100;++i)
+			{
+				s.insert(i);
+			}
+			assert(s.size()==100);
+			for (int i=0;i<100;++i)
+			{
+				assert(s.isContain(i));
+				auto it = s.find(i);
+				assert(*it==i);
+			}
+			s.erase(30);
+			s.erase(44);
+			assert(s.find(30)==s.end());
+			assert(s.find(44)==s.end());
+			std::cout<<"Hashset test ok!"<<std::endl;
 		}
 		void testAllCases()
 		{
@@ -273,6 +307,7 @@ namespace MINI_STL
 			map_test();
 			multimap_test();
 			hashtable_test();
+			hashset_test();
 		}
 	}
 }

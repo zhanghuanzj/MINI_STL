@@ -82,6 +82,7 @@
     <ClInclude Include="..\..\src\Construct.h" />
     <ClInclude Include="..\..\src\Deque.h" />
     <ClInclude Include="..\..\src\Functional.h" />
+    <ClInclude Include="..\..\src\Hashset.h" />
     <ClInclude Include="..\..\src\HashTable.h" />
     <ClInclude Include="..\..\src\Hash_fcn.h" />
     <ClInclude Include="..\..\src\Heap.h" />

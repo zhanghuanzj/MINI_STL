@@ -29,5 +29,11 @@ namespace MINI_STL
 			return x.first;
 		}
 	};
+
+	template<class T>
+	struct equal_to
+	{
+		bool operator()(const T& x,const T& y)const{return x==y;}
+	};
 }
 #endif

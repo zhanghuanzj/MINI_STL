@@ -66,15 +66,15 @@ namespace MINI_STL
 		typedef Value value_type;
 		typedef ptrdiff_t difference_type;
 		typedef size_t size_type;
-		typedef Value& reference;
-		typedef Value* pointer;
+		typedef const Value& reference;
+		typedef const Value* pointer;
 
-		node *cur;
-		hashtable *ht;
+		const node *cur;
+		const hashtable *ht;
 
 		hashtable_const_iterator(){}
-		hashtable_const_iterator(node *n,hashtable *table):cur(n),ht(table){}
-		hashtable_const_iterator(const iterator& it):cur(it.cur),ht(it.it){}
+		hashtable_const_iterator(const node *n,const hashtable *table):cur(n),ht(table){}
+		hashtable_const_iterator(const iterator& it):cur(it.cur),ht(it.ht){}
 
 		reference operator*()const{return cur->val;}
 		pointer operator->()const{return &(operator*());}
@@ -107,6 +107,10 @@ namespace MINI_STL
 	}
 
 	template<class Value,class Key,class HashFcn,class ExtractKey,class EqualKey>
+	bool operator==(const hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>& ht1,
+					const hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>& ht2);
+
+	template<class Value,class Key,class HashFcn,class ExtractKey,class EqualKey>
 	class hashtable
 	{
 	public:
@@ -130,6 +134,9 @@ namespace MINI_STL
 		typedef hashtable_const_iterator<Value,Key,HashFcn,ExtractKey,EqualKey>	const_iterator;
 		friend struct hashtable_iterator<Value,Key,HashFcn,ExtractKey,EqualKey>;
 		friend struct hashtable_const_iterator<Value,Key,HashFcn,ExtractKey,EqualKey>;
+		template <class VL, class KY, class HF, class EX, class EQ>
+  		friend bool operator== (const hashtable<VL, KY, HF, EX, EQ>&,
+                          		const hashtable<VL, KY, HF, EX, EQ>&);
 	private:
 		node* getNode(){return node_allocator::allocate();}
 		void putNode(node* p){node_allocator::deallocate(p);}
@@ -170,6 +177,8 @@ namespace MINI_STL
 		{
 			buckets_copy_from(ht.buckets);
 		}
+
+		~hashtable() {clear();}
 
 		size_type erase(const key_type& k)
 		{
@@ -213,10 +222,57 @@ namespace MINI_STL
 			return insert_unique_noresize(v);
 		}
 
+		iterator find(const key_type& k)
+		{
+			auto index = bucket_num_by_key(k);
+			node* first = buckets[index];
+			while(first!=nullptr && !equals(k,get_key(first->val)))
+			{
+				first = first->next;
+			}
+			return iterator(first,this);
+		}
+
+		const_iterator find(const key_type& k)const
+		{
+			auto index = bucket_num_by_key(k);
+			node* first = buckets[index];
+			while(first!=nullptr && !equals(k,get_key(first->val)))
+			{
+				first = first->next;
+			}
+			return const_iterator(first,this);
+		}
+
 		size_type size()const{return ele_nums;}
 		bool empty()const{return ele_nums==0;}
 
+		iterator begin()
+		{
+			for(auto index=0;index<buckets.size();++index)
+			{
+				if (buckets[index])
+				{
+					return iterator(buckets[index],this);
+				}
+			}
+			return end();
+		}
 
+		const_iterator begin() const
+		{
+			for(auto index=0;index<buckets.size();++index)
+			{
+				if (buckets[index])
+				{
+					return const_iterator(buckets[index],this);
+				}
+			}
+			return end();
+		}
+
+		iterator end() {return iterator(nullptr,this);}
+		const_iterator end()const {return const_iterator(nullptr,this);}
 
 	private:
 		void initialize_buckets(size_type n)
@@ -265,7 +321,7 @@ namespace MINI_STL
 
 		void clear()
 		{
-			for(auto i = 0;i<buckets.size();++i)
+			for(size_type i = 0;i<buckets.size();++i)
 			{
 				node* cur = buckets[i];
 				while(cur!=nullptr)
@@ -324,6 +380,8 @@ namespace MINI_STL
 		}
 	
 	};
+
+	//Iterator ++
 	template<class Value,class Key,class HashFcn,class ExtractKey,class EqualKey>
 	hashtable_iterator<Value,Key,HashFcn,ExtractKey,EqualKey>& hashtable_iterator<Value,Key,HashFcn,ExtractKey,EqualKey>::operator++()
 	{
@@ -370,6 +428,39 @@ namespace MINI_STL
 		iterator temp = *this;
 		++(*this);
 		return temp;
+	}
+
+	template<class Value,class Key,class HashFcn,class ExtractKey,class EqualKey>
+	bool operator==(const hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>& ht1,
+					const hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>& ht2)
+	{
+		typedef typename hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>::node node;
+		if (ht1.buckets.size()!=ht2.buckets.size()||ht1.size()!=ht2.size())
+		{
+			return false;
+		}
+		for(auto index=0;index<ht1.buckets.size();++index)
+		{
+			node* cur1 = ht1.buckets[index];
+			node* cur2 = ht2.buckets[index];
+			while(cur1 && cur2 && cur1->val==cur2->val)
+			{
+				cur1 = cur1->next;
+				cur2 = cur2->next;
+			}
+			if (cur1 || cur2)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	template<class Value,class Key,class HashFcn,class ExtractKey,class EqualKey>
+	bool operator!=(const hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>& ht1,
+					const hashtable<Value,Key,HashFcn,ExtractKey,EqualKey>& ht2)
+	{
+		return !(ht1==ht2);
 	}
 }
 #endif

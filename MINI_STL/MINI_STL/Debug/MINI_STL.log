@@ -1,17 +1,7 @@
-﻿生成启动时间为 2016/7/19 17:18:02。
+﻿生成启动时间为 2016/7/20 17:13:41。
      1>项目“C:\Users\Dell\Documents\GitHub\MINI_STL\MINI_STL\MINI_STL\MINI_STL.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\Test\BasicTest.cpp ..\..\src\Test\DequeTest.cpp ..\..\src\Test\ListTest.cpp ..\..\src\Test\PriorityQueueTest.cpp ..\..\src\Test\QueueTest.cpp ..\..\src\Test\StackTest.cpp ..\..\src\Test\VectorTest.cpp ..\..\src\main.cpp
-         main.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\reverseiterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\list.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\rbtree.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\src\Test\BasicTest.cpp
          BasicTest.cpp
      1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
      1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
@@ -21,55 +11,6 @@
      1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
      1>c:\users\dell\documents\github\mini_stl\src\reverseiterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
      1>c:\users\dell\documents\github\mini_stl\src\rbtree.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         正在生成代码...
-         正在编译...
-         VectorTest.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\reverseiterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         StackTest.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         QueueTest.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         PriorityQueueTest.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\reverseiterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         ListTest.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\list.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\reverseiterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         DequeTest.cpp
-     1>c:\users\dell\documents\github\mini_stl\src\algorithm.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\iterator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\construct.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\allocator.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\alloc.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>c:\users\dell\documents\github\mini_stl\src\uninitialized.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-         正在生成代码...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Dell\Documents\GitHub\MINI_STL\MINI_STL\Debug\MINI_STL.exe" /INCREMENTAL /NOLOGO winmm.lib dxerr.lib dxguid.lib d3dx9d.lib d3dx10d.lib d3d9.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Dell\Documents\GitHub\MINI_STL\MINI_STL\Debug\MINI_STL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Dell\Documents\GitHub\MINI_STL\MINI_STL\Debug\MINI_STL.lib" /MACHINE:X86 Debug\Alloc.obj
          Debug\main.obj
@@ -86,4 +27,4 @@
 
 生成成功。
 
-已用时间 00:00:06.66
+已用时间 00:00:01.92
