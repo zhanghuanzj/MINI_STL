@@ -109,6 +109,7 @@
     <ClInclude Include="..\..\src\Test\VectorTest.h" />
     <ClInclude Include="..\..\src\TypeTraits.h" />
     <ClInclude Include="..\..\src\Uninitialized.h" />
+    <ClInclude Include="..\..\src\Union_set.H" />
     <ClInclude Include="..\..\src\Vector.h" />
   </ItemGroup>
   <ItemGroup>

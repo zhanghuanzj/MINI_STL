@@ -297,6 +297,18 @@ namespace MINI_STL
 			assert(s.find(44)==s.end());
 			std::cout<<"Hashset test ok!"<<std::endl;
 		}
+
+		void union_set_test()
+		{
+			Union_set un(100);
+			un.unionSet(1,3);
+			un.unionSet(3,2);
+			assert(un.isConnected(1,2)==true);
+			un.unionSet(10,2);
+			assert(un.isConnected(10,1)==true);
+			assert(un.isConnected(11,10)==false);
+		}
+
 		void testAllCases()
 		{
 			rbtree_test();
@@ -307,6 +319,7 @@ namespace MINI_STL
 			map_test();
 			multimap_test();
 			hashtable_test();
+			union_set_test();
 			hashset_test();
 		}
 	}
