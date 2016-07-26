@@ -12,6 +12,7 @@
 #include "Slist.h"
 #include "Vector.h"
 #include "Test\BasicTest.h" 
+#include "Test\AlgorithmTest.h"
 
 using namespace MINI_STL::Profiler;
 
@@ -41,6 +42,7 @@ int main(){
 	//MINI_STL::Unordered_setTest::testAllCases();
 	MINI_STL::VectorTest::testAllCases();
 	MINI_STL::BasicTest::testAllCases();
+	MINI_STL::AlgorithmTest::testAllCases();
 	system("pause");
 	return 0;
 }

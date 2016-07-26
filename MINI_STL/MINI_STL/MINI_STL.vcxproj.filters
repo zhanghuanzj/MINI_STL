@@ -120,6 +120,9 @@
     <ClInclude Include="..\..\src\Union_set.H">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Test\AlgorithmTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -150,6 +153,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Test\BasicTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Test\AlgorithmTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

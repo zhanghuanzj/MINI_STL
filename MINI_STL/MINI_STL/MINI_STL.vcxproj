@@ -99,6 +99,7 @@
     <ClInclude Include="..\..\src\Set.h" />
     <ClInclude Include="..\..\src\Slist.h" />
     <ClInclude Include="..\..\src\Stack.h" />
+    <ClInclude Include="..\..\src\Test\AlgorithmTest.h" />
     <ClInclude Include="..\..\src\Test\BasicTest.h" />
     <ClInclude Include="..\..\src\Test\DequeTest.h" />
     <ClInclude Include="..\..\src\Test\ListTest.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="..\..\src\Alloc.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Profiler\Profiler.cpp" />
+    <ClCompile Include="..\..\src\Test\AlgorithmTest.cpp" />
     <ClCompile Include="..\..\src\Test\BasicTest.cpp" />
     <ClCompile Include="..\..\src\Test\DequeTest.cpp" />
     <ClCompile Include="..\..\src\Test\ListTest.cpp" />

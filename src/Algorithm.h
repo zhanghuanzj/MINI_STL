@@ -247,6 +247,28 @@ namespace MINI_STL
 	}
 
 	template <class InputIterator,class T>
+	T accumulate(InputIterator first,InputIterator last,T init)
+	{
+		while(first!=last)
+		{
+			init = init + *first;
+			++first;
+		}
+		return init;
+	}
+
+	template <class InputIterator,class T,class BinaryOperation>
+	T accumulate(InputIterator first,InputIterator last,T init,BinaryOperation op)
+	{
+		while(first!=last)
+		{
+			init = op(init ,*first);
+			++first;
+		}
+		return init;
+	}
+
+	template <class InputIterator,class T>
 	InputIterator find(InputIterator first,InputIterator last,const T& value)
 	{
 		while (first!=last && *first!=value)
