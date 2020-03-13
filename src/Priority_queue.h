@@ -24,6 +24,7 @@ namespace MINI_STL
   	public:
   		//Constructor
   		priority_queue():seq(){}
+  		priority_queue(const priority_queue& pq):seq(pq.seq), comp(pq.comp){}
   		priority_queue(const Compare& c):seq(),comp(c){}
   		template<class InputIterator>
   		priority_queue(InputIterator first,InputIterator last,const Compare& c):seq(first,last),comp(c)

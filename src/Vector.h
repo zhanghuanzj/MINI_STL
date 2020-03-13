@@ -69,6 +69,7 @@ namespace MINI_STL
 	public:
 		//¹¹Ôìº¯Êý
 		vector():start(0),finish(0),end_of_storage(0){}
+		vector(const vector& v):vector(v.begin(), v.end()){}
 		vector(size_type n,const T& value){fill_initialize(n,value);}
 		vector(int n,const T& value){fill_initialize(n,value);}
 		vector(long n,const T& value){fill_initialize(n,value);}
